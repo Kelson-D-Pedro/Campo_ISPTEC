@@ -1,37 +1,37 @@
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import { PrismaClient } from '@prisma/client'
-import { validateEmail, validatePassword } from './auth.helpers'
+import { validatePassword } from './auth.helpers'
 
 const prisma = new PrismaClient()
 
 const SECRET = process.env.JWT_SECRET!
 
 interface RegisterParams {
-  nome: string
-  email: string
-  senha: string
-  tipo: string
+    nome: string
+    numeroEstudante: string
+    senha: string
+    contacto: string
 }
 
-export const register = async ({ nome, email, senha, tipo }: RegisterParams) => {
-  if (!nome || !email || !senha || !tipo) throw new Error('Campos obrigatórios ausentes.')
-  if (!validateEmail(email)) throw new Error('Email inválido.')
+export const register = async ({ nome, numeroEstudante, senha, contacto }: RegisterParams) => {
+  if (!nome || !numeroEstudante || !senha || !contacto) throw new Error('Campos obrigatórios ausentes.')
   if (!validatePassword(senha)) throw new Error('Senha muito fraca.')
-
-  const existing = await prisma.user.findUnique({ where: { email } })
-  if (existing) throw new Error('Email já cadastrado.')
+    const fullemail = `${numeroEstudante}@isptec.co.ao`
+  const existing = await prisma.user.findUnique({ where: { fullemail } })
+  if (existing) throw new Error('Estudade já cadastrado.')
 
   const hashed = await bcrypt.hash(senha, 10)
-  const user = await prisma.user.create({ data: { nome, email, senha: hashed, tipo } })
-  return { id: user.id, nome: user.nome, email: user.email, tipo: user.tipo }
+  const user = await prisma.user.create({ data: { nome, fullemail, senha: hashed, contacto } })
+  return { id: user.id, nome: user.nome, numeroEstudante: user.fullemail, contacto: user.contacto }
 }
 
-export const login = async ({ email, senha }: { email: string; senha: string }) => {
-  if (!email || !senha) throw new Error('Email e senha obrigatórios.')
+export const login = async ({ numeroEstudante, senha }: { numeroEstudante: string; senha: string }) => {
+  if (!numeroEstudante || !senha) throw new Error('Email e senha obrigatórios.')
 
-  const user = await prisma.user.findUnique({ where: { email } })
-  if (!user) throw new Error('Usuário não encontrado.')
+    const fullemail = `${numeroEstudante}@ispctec.co.ao`
+  const user = await prisma.user.findUnique({ where: { fullemail } })
+  if (!user) throw new Error('Estudante não encontrado.')
 
   const match = await bcrypt.compare(senha, user.senha)
   if (!match) throw new Error('Credenciais inválidas.')
@@ -39,27 +39,13 @@ export const login = async ({ email, senha }: { email: string; senha: string }) 
   return jwt.sign({ id: user.id, tipo: user.tipo }, SECRET, { expiresIn: '1h' })
 }
 
-export const recoverPassword = async (email: string) => {
-  if (!validateEmail(email)) throw new Error('Email inválido.')
-  const user = await prisma.user.findUnique({ where: { email } })
+export const recoverPassword = async (numeroEstudante: string) => {
+    const fullemail = `${numeroEstudante}@isptec.co.ao`;
+  const user = await prisma.user.findUnique({ where: { fullemail } })
   if (!user) throw new Error('Usuário não encontrado.')
 
   // Simula envio de email
-  console.log(`[RECUPERAR SENHA] Enviar link para: ${email}`)
-}
-
-export const updateUser = async (userId: number, data: any) => {
-  const fields: Record<string, any> = {}
-  if (data.nome) fields['nome'] = data.nome
-  if (data.email && validateEmail(data.email)) fields['email'] = data.email
-  if (data.senha && validatePassword(data.senha)) {
-    fields['senha'] = await bcrypt.hash(data.senha, 10)
-  }
-
-  return prisma.user.update({
-    where: { id: userId },
-    data: fields
-  })
+  console.log(`[RECUPERAR SENHA] Enviar link para: ${fullemail}`)
 }
 
 export const deleteUser = async (userId: number) => {

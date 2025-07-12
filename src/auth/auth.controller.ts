@@ -42,26 +42,6 @@ export const recoverPassword = async (req: Request, res: Response) => {
   }
 }
 
-export const updateUser = async (req: Request, res: Response) => {
-  try {
-    if (!req.user || !req.user.id) {
-        console.error("User not authenticated for update.")
-      return res.status(401).json({ error: "Usuário não autenticado" })
-    }
-    const userId = Number(req.user.id)
-    if (isNaN(userId)) {
-        console.error("Invalid user ID for update:", req.user.id)
-      return res.status(400).json({ error: "ID de usuário inválido" })
-    }
-    const updated = await AuthService.updateUser(userId, req.body)
-    console.log("User updated successfully:", updated)
-    res.status(200).json(updated)
-  } catch (err) {
-    console.error("Error updating user:", err)
-    res.status(400).json({ error: "Erro ao atualizar senha." })
-  }
-}
-
 export const deleteUser = async (req: Request, res: Response) => {
   try {
     if (!req.user || !req.user.id) {
