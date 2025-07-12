@@ -61,3 +61,17 @@ export const deleteAllRequests = async () => {
   await prisma.externo.deleteMany({});
   return { message: "All requests deleted successfully" };
 }
+
+export const updateEstudanteStatus = async (id: number, status: string) => {
+  return await prisma.estudante.update({
+    where: { id },
+    data: { status },
+  });
+};
+
+export const updateExternoStatus = async (id: number, status: string) => {
+  return await prisma.externo.update({
+    where: { id },
+    data: { status },
+  });
+};
