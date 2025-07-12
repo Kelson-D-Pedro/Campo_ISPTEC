@@ -35,3 +35,12 @@ model Externo{
   status          String   @default("pendente")
   //userId          Int
 }
+
+model User{
+  id              Int     @id @default(autoincrement())
+  email           String  @unique
+  password        String
+  nomeCompleto    String
+  telefone        String
+  status          String   @default("pendente")
+}

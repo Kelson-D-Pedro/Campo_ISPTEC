@@ -8,4 +8,7 @@ app.use("/teste", (req, res) => {
     res.status(200).json({ message: "Servidor já está a vir bem!"});
 });
 
+//app.use("admin/all", )
+//app.use("/api", apiRoutes); // Uncomment and define apiRoutes if needed
+
 export default app;
