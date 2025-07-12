@@ -5,8 +5,8 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
-    "start": "node dist/server.js",
-    "dev": "ts-node-dev --respawn --ignore-watch dist src/server.ts",
+    "start": "node dist/index.js",
+    "dev": "ts-node-dev --respawn --ignore-watch dist src/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
