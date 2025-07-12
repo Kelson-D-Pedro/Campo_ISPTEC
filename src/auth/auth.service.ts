@@ -17,7 +17,7 @@ interface RegisterParams {
 
 export const register = async ({ nome, numeroEstudante, senha, contacto }: RegisterParams) => {
   if (!nome || !numeroEstudante || !senha || !contacto) throw new Error('Campos obrigatórios ausentes.')
-  //if (!validatePassword(senha)) throw new Error('Senha muito fraca.')
+  if (!validatePassword(senha)) throw new Error('Senha muito fraca.')
   const existing = await prisma.user.findUnique({ where: { numeroEstudante } })
   if (existing) throw new Error('Estudade já cadastrado.')
 
@@ -47,5 +47,7 @@ export const recoverPassword = async (numeroEstudante: string) => {
 }
 
 export const deleteUser = async (userId: number) => {
+  console.log(`Deleting user with ID: ${userId}`)
   await prisma.user.delete({ where: { id: userId } })
+
 }

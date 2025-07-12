@@ -45,13 +45,14 @@ export const recoverPassword = async (req: Request, res: Response) => {
 
 export const deleteUser = async (req: Request, res: Response) => {
   try {
-    if (!req.user || !req.user.id) {
+    const userID = req.params.id
+    if (!userID) {
         console.error("User not authenticated for deletion.")
       return res.status(401).json({ error: "Usuário não autenticado" })
     }
-    const userId = Number(req.user.id)
+    const userId = Number(userID)
     if (isNaN(userId)) {
-        console.error("Invalid user ID for deletion:", req.user.id)
+        console.error("Invalid user ID for deletion:", userID)
       return res.status(400).json({ error: "ID de usuário inválido" })
     }
     await AuthService.deleteUser(userId)
