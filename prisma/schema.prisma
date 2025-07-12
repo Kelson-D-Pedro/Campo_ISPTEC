@@ -8,8 +8,8 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Estudante{
-  id              Int     @id @default(autoincrement())
+model Estudante {
+  id              Int      @id @default(autoincrement())
   nomeCompleto    String
   turma           String
   curso           String
@@ -20,27 +20,81 @@ model Estudante{
   periodo         String
   telefone        String
   status          String   @default("pendente")
-  //userId          Int
 }
 
-model Externo{
-  id              Int     @id @default(autoincrement())
-  nomeCompleto    String
-  contacto        String
-  email           String
-  dataUtilizacao  DateTime
-  horario         String
-  periodo         String
-  modalidade      String
-  status          String   @default("pendente")
-  //userId          Int
+model Externo {
+  id             Int      @id @default(autoincrement())
+  nomeCompleto   String
+  contacto       String
+  email          String
+  dataUtilizacao DateTime
+  horario        String
+  periodo        String
+  modalidade     String
+  status         String   @default("pendente")
 }
 
-model User{
-  id              Int     @id @default(autoincrement())
-  email           String  @unique
-  password        String
-  nomeCompleto    String
-  telefone        String
-  status          String   @default("pendente")
+model Equipe {
+  id                          Int                  @id @default(autoincrement())
+  nome                        String
+  categoria                   String
+  Jogo_Jogo_equipaAIdToEquipe Jogo[]               @relation("Jogo_equipaAIdToEquipe")
+  Jogo_Jogo_equipaBIdToEquipe Jogo[]               @relation("Jogo_equipaBIdToEquipe")
+  ParticipacaoEquipe          ParticipacaoEquipe[]
+}
+
+model Evento {
+  id                 Int                  @id @default(autoincrement())
+  nome               String
+  contacto           String
+  email              String
+  tipoEvento         String
+  dataInicio         DateTime
+  dataFim            DateTime
+  formato            String
+  estado             String               @default("planeado")
+  criadoEm           DateTime             @default(now())
+  Jogo               Jogo[]
+  Marcacao           Marcacao[]
+  ParticipacaoEquipe ParticipacaoEquipe[]
+}
+
+model Jogo {
+  id                            Int       @id @default(autoincrement())
+  eventoId                      Int
+  equipaAId                     Int
+  equipaBId                     Int
+  resultado                     String?
+  Equipe_Jogo_equipaAIdToEquipe Equipe    @relation("Jogo_equipaAIdToEquipe", fields: [equipaAId], references: [id])
+  Equipe_Jogo_equipaBIdToEquipe Equipe    @relation("Jogo_equipaBIdToEquipe", fields: [equipaBId], references: [id])
+  Evento                        Evento    @relation(fields: [eventoId], references: [id])
+  Marcacao                      Marcacao?
+}
+
+model Marcacao {
+  id         Int      @id @default(autoincrement())
+  eventoId   Int
+  titulo     String
+  tipo       String
+  dataInicio DateTime
+  dataFim    DateTime
+  jogoId     Int?     @unique
+  criadoEm   DateTime @default(now())
+  Evento     Evento   @relation(fields: [eventoId], references: [id])
+  Jogo       Jogo?    @relation(fields: [jogoId], references: [id])
+}
+
+model ParticipacaoEquipe {
+  id       Int    @id @default(autoincrement())
+  eventoId Int
+  equipeId Int
+  Equipe   Equipe @relation(fields: [equipeId], references: [id])
+  Evento   Evento @relation(fields: [eventoId], references: [id])
+}
+
+model Technician {
+  id            Int     @id @default(autoincrement())
+  nome          String
+  especialidade String
+  disponivel    Boolean @default(true)
 }
