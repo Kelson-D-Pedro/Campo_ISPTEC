@@ -71,7 +71,7 @@ export const deleteEventoController = async (req: Request, res: Response) => {
 
 // --------------------------- TEAMS ----------------------------
 
-export const createEquipe = async (req: Request, res: Response) => {
+export const createEquipeController = async (req: Request, res: Response) => {
   try {
     console.log("Creating equipe:", req.body);
     const result = await eventService.createEquipe(req.body);
@@ -82,7 +82,7 @@ export const createEquipe = async (req: Request, res: Response) => {
   }
 };
 
-export const getEquipes = async (_req: Request, res: Response) => {
+export const getEquipesController = async (_req: Request, res: Response) => {
   try {
     const result = await eventService.getEquipes();
     return res.status(201).json(result);
@@ -92,7 +92,7 @@ export const getEquipes = async (_req: Request, res: Response) => {
   }
 };
 
-export const getEquipeById = async (req: Request, res: Response) => {
+export const getEquipeByIdController = async (req: Request, res: Response) => {
   try {
     const result = await eventService.getEquipeById(Number(req.params.id));
     return res.status(201).json(result);
@@ -102,7 +102,7 @@ export const getEquipeById = async (req: Request, res: Response) => {
   }
 };
 
-export const updateEquipe = async (req: Request, res: Response) => {
+export const updateEquipeController = async (req: Request, res: Response) => {
   try {
     const result = await eventService.updateEquipe(Number(req.params.id), req.body);
     return res.status(201).json(result);
@@ -112,7 +112,7 @@ export const updateEquipe = async (req: Request, res: Response) => {
   }
 };
 
-export const deleteEquipe = async (req: Request, res: Response) => {
+export const deleteEquipeController = async (req: Request, res: Response) => {
   try {
     const result = await eventService.deleteEquipe(Number(req.params.id));
     return res.status(201).json(result);
