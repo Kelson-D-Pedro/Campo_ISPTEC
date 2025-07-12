@@ -11,6 +11,7 @@ declare global {
 
 export const register = async (req: Request, res: Response) => {
   try {
+    console.log("Registering user with data:", req.body)
     const user = await AuthService.register(req.body)
     res.status(201).json(user)
     console.log("User registered successfully:", user)

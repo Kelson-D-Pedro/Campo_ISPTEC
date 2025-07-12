@@ -16,36 +16,33 @@ interface RegisterParams {
 
 export const register = async ({ nome, numeroEstudante, senha, contacto }: RegisterParams) => {
   if (!nome || !numeroEstudante || !senha || !contacto) throw new Error('Campos obrigatórios ausentes.')
-  if (!validatePassword(senha)) throw new Error('Senha muito fraca.')
-    const fullemail = `${numeroEstudante}@isptec.co.ao`
-  const existing = await prisma.user.findUnique({ where: { fullemail } })
+  //if (!validatePassword(senha)) throw new Error('Senha muito fraca.')
+  const existing = await prisma.user.findUnique({ where: { numeroEstudante } })
   if (existing) throw new Error('Estudade já cadastrado.')
 
   const hashed = await bcrypt.hash(senha, 10)
-  const user = await prisma.user.create({ data: { nome, fullemail, senha: hashed, contacto } })
-  return { id: user.id, nome: user.nome, numeroEstudante: user.fullemail, contacto: user.contacto }
+  const user = await prisma.user.create({ data: { nome, numeroEstudante, senha: hashed, contacto } })
+  return { id: user.id, nome: user.nome, numeroEstudante: `${user.numeroEstudante}@gmial.co.ao`, contacto: user.contacto }
 }
 
 export const login = async ({ numeroEstudante, senha }: { numeroEstudante: string; senha: string }) => {
   if (!numeroEstudante || !senha) throw new Error('Email e senha obrigatórios.')
 
-    const fullemail = `${numeroEstudante}@ispctec.co.ao`
-  const user = await prisma.user.findUnique({ where: { fullemail } })
+  const user = await prisma.user.findUnique({ where: { numeroEstudante } })
   if (!user) throw new Error('Estudante não encontrado.')
 
   const match = await bcrypt.compare(senha, user.senha)
   if (!match) throw new Error('Credenciais inválidas.')
 
-  return jwt.sign({ id: user.id, tipo: user.tipo }, SECRET, { expiresIn: '1h' })
+  return jwt.sign({ id: user.id }, SECRET, { expiresIn: '1h' })
 }
 
 export const recoverPassword = async (numeroEstudante: string) => {
-    const fullemail = `${numeroEstudante}@isptec.co.ao`;
-  const user = await prisma.user.findUnique({ where: { fullemail } })
+  const user = await prisma.user.findUnique({ where: { numeroEstudante } })
   if (!user) throw new Error('Usuário não encontrado.')
 
   // Simula envio de email
-  console.log(`[RECUPERAR SENHA] Enviar link para: ${fullemail}`)
+  console.log(`[RECUPERAR SENHA] Enviar link para: ${numeroEstudante}@isptec.co.co`)
 }
 
 export const deleteUser = async (userId: number) => {
