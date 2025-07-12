@@ -10,6 +10,7 @@ const SECRET = process.env.JWT_SECRET!
 interface RegisterParams {
     nome: string
     numeroEstudante: string
+    fullemail?: string
     senha: string
     contacto: string
 }
@@ -21,8 +22,8 @@ export const register = async ({ nome, numeroEstudante, senha, contacto }: Regis
   if (existing) throw new Error('Estudade já cadastrado.')
 
   const hashed = await bcrypt.hash(senha, 10)
-  const user = await prisma.user.create({ data: { nome, numeroEstudante, senha: hashed, contacto } })
-  return { id: user.id, nome: user.nome, numeroEstudante: `${user.numeroEstudante}@gmial.co.ao`, contacto: user.contacto }
+  const user = await prisma.user.create({ data: { nome, numeroEstudante, fullemail: `${numeroEstudante}@isptec.co.ao`, senha: hashed, contacto } })
+  return { id: user.id, nome: user.nome, numeroEstudante: user.numeroEstudante ,fullemail: `${user.numeroEstudante}@isptec.co.ao`, contacto: user.contacto }
 }
 
 export const login = async ({ numeroEstudante, senha }: { numeroEstudante: string; senha: string }) => {
