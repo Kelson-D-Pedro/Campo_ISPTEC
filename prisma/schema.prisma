@@ -19,6 +19,8 @@ model Estudante{
   horario         String
   periodo         String
   telefone        String
+  status          String   @default("pendente")
+  //userId          Int
 }
 
 model Externo{
@@ -30,4 +32,6 @@ model Externo{
   horario         String
   periodo         String
   modalidade      String
+  status          String   @default("pendente")
+  //userId          Int
 }
