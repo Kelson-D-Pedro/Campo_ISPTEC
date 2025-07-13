@@ -28,7 +28,7 @@ export const register = async ({ nome, numeroEstudante, senha, contacto }: Regis
 }
 
 export const login = async ({ numeroEstudante, senha }: { numeroEstudante: string; senha: string }) => {
-  if (!numeroEstudante || !senha) throw new Error('Email e senha obrigatórios.')
+  if (!numeroEstudante || !senha) throw new Error('Número de estudante e senha obrigatórios.')
 
   const user = await prisma.user.findUnique({ where: { numeroEstudante } })
   if (!user) throw new Error('Estudante não encontrado.')

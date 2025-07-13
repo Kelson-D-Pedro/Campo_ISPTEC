@@ -3,12 +3,12 @@ import { createEstudante, getEstudanteRequests, updateEstudante, deleteEstudante
 import { createExterno, getExternoRequests, updateExterno, deleteExterno } from "./requests/request.controller";
 import { getAllRequests, deleteAllRequests, updateStatusEstudante, updateStatusExterno } from "./requests/request.controller";
 import { register, login, recoverPassword, deleteUser } from "./auth/auth.controller";
-import { createJogoController, getJogosController, getJogoByIdController, updateJogoController, deleteJogoController } from "./events/events_controllers";
-import { createMarcacaoController, getMarcacoesController, getMarcacaoByIdController, updateMarcacaoController, deleteMarcacaoController } from "./events/events_controllers";
-import { createParticipacaoController, getParticipacoesController, getParticipacaoByIdController, updateParticipacaoController, deleteParticipacaoController } from "./events/events_controllers";
-import { createTechnicianController, getTechniciansController, getTechnicianByIdController, updateTechnicianController, deleteTechnicianController } from "./events/events_controllers";
-import { createEquipeController, getEquipesController, getEquipeByIdController, updateEquipeController, deleteEquipeController } from "./events/events_controllers";
-import { createEventoController, getEventosController, getEventoByIdController, updateEventoController, deleteEventoController } from "./events/events_controllers";
+import { createJogoController, getJogosController, getJogoByIdController, updateJogoController, deleteJogoController } from "./events/events.controller";
+import { createMarcacaoController, getMarcacoesController, getMarcacaoByIdController, updateMarcacaoController, deleteMarcacaoController } from "./events/events.controller";
+import { createParticipacaoController, getParticipacoesController, getParticipacaoByIdController, updateParticipacaoController, deleteParticipacaoController } from "./events/events.controller";
+import { createTechnicianController, getTechniciansController, getTechnicianByIdController, updateTechnicianController, deleteTechnicianController } from "./events/events.controller";
+import { createEquipeController, getEquipesController, getEquipeByIdController, updateEquipeController, deleteEquipeController } from "./events/events.controller";
+import { createEventoController, getEventosController, getEventoByIdController, updateEventoController, deleteEventoController } from "./events/events.controller";
  
 const app = express();
 

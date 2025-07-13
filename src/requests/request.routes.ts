@@ -8,21 +8,21 @@ router.use(middleware.logRequests);
 
 // ------- ESTUDANTE -------
 router.post(
-  "/estudante",
+  "/api/estudante",
   middleware.sanitizeData,
   middleware.validateEstudanteData,
   requestController.createEstudante
 );
 
 router.get(
-  "/estudante/:numeroEstudante",
+  "/api/estudante/:numeroEstudante",
   middleware.validateNumeroEstudante,
   middleware.logEstudanteOperation,
   requestController.getEstudanteRequests
 );
 
 router.put(
-  "/estudante/:id",
+  "/api/estudante/:id",
   middleware.validateIdParam,
   middleware.sanitizeData,
   middleware.logEstudanteOperation,
@@ -30,29 +30,28 @@ router.put(
 );
 
 router.delete(
-  "/estudante/:id",
+  "/api/estudante/:id",
   middleware.validateIdParam,
   middleware.logEstudanteOperation,
   requestController.deleteEstudante
 );
 
 // ------- EXTERNO -------
-router.post(
-  "/externo",
+router.post("/api/externo",
   middleware.sanitizeData,
   middleware.validateExternoData,
   requestController.createExterno
 );
 
 router.get(
-  "/externo/:email",
+  "/api/externo/:email",
   middleware.validateEmailParam,
   middleware.logExternoOperation,
   requestController.getExternoRequests
 );
 
 router.put(
-  "/externo/:id",
+  "/api/externo/:id",
   middleware.validateIdParam,
   middleware.sanitizeData,
   middleware.logExternoOperation,
@@ -60,26 +59,26 @@ router.put(
 );
 
 router.delete(
-  "/externo/:id",
+  "/api/externo/:id",
   middleware.validateIdParam,
   middleware.logExternoOperation,
   requestController.deleteExterno
 );
 
 // ------- ADMIN -------
-router.get("/admin/all", requestController.getAllRequests);
+router.get("/api/admin/all", requestController.getAllRequests);
 
-router.delete("/admin/all", requestController.deleteAllRequests);
+router.delete("/api/admin/all", requestController.deleteAllRequests);
 
 router.patch(
-  "/admin/estudante/:id/status",
+  "/api/admin/estudante/:id/status",
   middleware.validateIdParam,
   middleware.validateStatusUpdate,
   requestController.updateStatusEstudante
 );
 
 router.patch(
-  "/admin/externo/:id/status",
+  "/api/admin/externo/:id/status",
   middleware.validateIdParam,
   middleware.validateStatusUpdate,
   requestController.updateStatusExterno

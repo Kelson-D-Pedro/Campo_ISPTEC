@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import * as eventService from "./events_services";
+import * as eventService from "./events.service";
 
 // -------------------------- EVENTS ---------------------------
 

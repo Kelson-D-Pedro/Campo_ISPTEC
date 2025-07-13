@@ -4,9 +4,9 @@ import { verifyToken, checkRole } from './auth.middleware'
 
 const router = Router()
 
-router.post('/register', AuthController.register)
-router.post('/login', AuthController.login)
-router.post('/recover', AuthController.recoverPassword)
-router.delete('/delete/:id', verifyToken, AuthController.deleteUser)
+router.post('/api/register', AuthController.register)
+router.post('/api/login', AuthController.login)
+router.post('/api/recover', AuthController.recoverPassword)
+router.delete('/api/delete/:id', verifyToken, AuthController.deleteUser)
 
 export default router
