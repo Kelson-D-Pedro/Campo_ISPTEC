@@ -2,6 +2,7 @@ import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import { PrismaClient } from '@prisma/client'
 import { validatePassword } from './auth.helpers'
+import { transporter } from './auth.helpers'
 
 const prisma = new PrismaClient()
 
@@ -40,10 +41,25 @@ export const login = async ({ numeroEstudante, senha }: { numeroEstudante: strin
 
 export const recoverPassword = async (numeroEstudante: string) => {
   const user = await prisma.user.findUnique({ where: { numeroEstudante } })
+  console.log(`Recovering password for user: ${numeroEstudante}`)
   if (!user) throw new Error('Usuário não encontrado.')
 
-  // Simula envio de email
-  console.log(`[RECUPERAR SENHA] Enviar link para: ${numeroEstudante}@isptec.co.co`)
+  const emailDestino = `${numeroEstudante}@isptec.co.ao`
+
+  await transporter.sendMail({
+    from: `"Sistema ISPTEC" <${process.env.EMAIL_USER}>`,
+    to: emailDestino,
+    subject: 'Recuperação de Senha',
+    html: `
+      <p>Olá ${user.nome},</p>
+      <p>Recebemos um pedido de recuperação de senha para o seu número de estudante: <strong>${numeroEstudante}</strong>.</p>
+      <p><a href="https://teusite.com/resetar-senha/${numeroEstudante}">Clique aqui para redefinir sua senha</a></p>
+      <p>Se não foi você, ignore este email.</p>
+      <p>ATT: esse link ainda não funciona, acho que vou mudar de lógica para isso.</p>
+    `
+  })
+
+  console.log(`[✔] Email de recuperação enviado para ${emailDestino}`)
 }
 
 export const deleteUser = async (userId: number) => {

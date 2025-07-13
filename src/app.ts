@@ -77,4 +77,5 @@ app.use("/eventos", getEventosController);
 app.use("/eventos/:id", getEventoByIdController);
 app.put("/eventos/:id", updateEventoController);
 app.delete("/eventos/:id", deleteEventoController);
+
 export default app;

@@ -97,10 +97,9 @@ model Technician {
   especialidade String
   disponivel    Boolean @default(true)
 }
-
 model User {
   id              Int    @id @default(autoincrement())
-  nome            String
+  nomeCompleto            String
   numeroEstudante String @unique
   fullemail       String? @unique
   senha           String

@@ -33,10 +33,16 @@ export const login = async (req: Request, res: Response) => {
 }
 
 export const recoverPassword = async (req: Request, res: Response) => {
+  const { numeroEstudante } = req.body
+
+  if (!numeroEstudante) {
+    return res.status(400).json({ error: 'Número de estudante é obrigatório.' })
+  }
+
   try {
-    await AuthService.recoverPassword(req.body.email)
-    console.log("Password recovery instructions sent to email:", req.body.email)
-    res.status(200).json({ message: 'Instruções enviadas para o e-mail.' })
+    await AuthService.recoverPassword(numeroEstudante)
+    console.log("Password recovery instructions sent to:", numeroEstudante)
+    res.status(200).json({ message: 'Instruções enviadas para o e-mail institucional.' })
   } catch (error) {
     console.error("Error recovering password:", error)
     res.status(400).json({ error: "Erro ao recuperar senha." })
