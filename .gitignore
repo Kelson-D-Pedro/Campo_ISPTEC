@@ -19,5 +19,3 @@ coverage
 *.swo
 *.orig
 *.cache
-
-generated

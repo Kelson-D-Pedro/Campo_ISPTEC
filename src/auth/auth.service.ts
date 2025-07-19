@@ -9,22 +9,22 @@ const prisma = new PrismaClient()
 const SECRET = process.env.JWT_SECRET!
 
 interface RegisterParams {
-    nome: string
+    nomeCompleto: string
     numeroEstudante: string
     fullemail?: string
     senha: string
     contacto: string
 }
 
-export const register = async ({ nome, numeroEstudante, senha, contacto }: RegisterParams) => {
-  if (!nome || !numeroEstudante || !senha || !contacto) throw new Error('Campos obrigatórios ausentes.')
+export const register = async ({ nomeCompleto, numeroEstudante, senha, contacto }: RegisterParams) => {
+  if (!nomeCompleto || !numeroEstudante || !senha || !contacto) throw new Error('Campos obrigatórios ausentes.')
   if (!validatePassword(senha)) throw new Error('Senha muito fraca.')
   const existing = await prisma.user.findUnique({ where: { numeroEstudante } })
   if (existing) throw new Error('Estudade já cadastrado.')
 
   const hashed = await bcrypt.hash(senha, 10)
-  const user = await prisma.user.create({ data: { nome, numeroEstudante, fullemail: `${numeroEstudante}@isptec.co.ao`, senha: hashed, contacto } })
-  return { id: user.id, nome: user.nome, numeroEstudante: user.numeroEstudante ,fullemail: `${user.numeroEstudante}@isptec.co.ao`, contacto: user.contacto }
+  const user = await prisma.user.create({ data: { nomeCompleto, numeroEstudante, fullemail: `${numeroEstudante}@isptec.co.ao`, senha: hashed, contacto } })
+  return { id: user.id, nomeCompleto: user.nomeCompleto, numeroEstudante: user.numeroEstudante ,fullemail: `${user.numeroEstudante}@isptec.co.ao`, contacto: user.contacto }
 }
 
 export const login = async ({ numeroEstudante, senha }: { numeroEstudante: string; senha: string }) => {
@@ -51,7 +51,7 @@ export const recoverPassword = async (numeroEstudante: string) => {
     to: emailDestino,
     subject: 'Recuperação de Senha',
     html: `
-      <p>Olá ${user.nome},</p>
+      <p>Olá ${user.nomeCompleto},</p>
       <p>Recebemos um pedido de recuperação de senha para o seu número de estudante: <strong>${numeroEstudante}</strong>.</p>
       <p><a href="https://teusite.com/resetar-senha/${numeroEstudante}">Clique aqui para redefinir sua senha</a></p>
       <p>Se não foi você, ignore este email.</p>
