@@ -62,6 +62,18 @@ export const recoverPassword = async (numeroEstudante: string) => {
   console.log(`[✔] Email de recuperação enviado para ${emailDestino}`)
 }
 
+export const getUsers = async () => {
+  console.log("Fetching all users from the database.")
+  const users = await prisma.user.findMany()
+  return users.map(user => ({
+    id: user.id,
+    nomeCompleto: user.nomeCompleto,
+    numeroEstudante: user.numeroEstudante,
+    fullemail: user.fullemail,
+    contacto: user.contacto
+  }))
+}
+
 export const deleteUser = async (userId: number) => {
   console.log(`Deleting user with ID: ${userId}`)
   await prisma.user.delete({ where: { id: userId } })

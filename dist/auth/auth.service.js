@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteUser = exports.recoverPassword = exports.login = exports.register = void 0;
+exports.deleteUser = exports.getUsers = exports.recoverPassword = exports.login = exports.register = void 0;
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const client_1 = require("@prisma/client");
@@ -57,6 +57,18 @@ const recoverPassword = async (numeroEstudante) => {
     console.log(`[✔] Email de recuperação enviado para ${emailDestino}`);
 };
 exports.recoverPassword = recoverPassword;
+const getUsers = async () => {
+    console.log("Fetching all users from the database.");
+    const users = await prisma.user.findMany();
+    return users.map(user => ({
+        id: user.id,
+        nomeCompleto: user.nomeCompleto,
+        numeroEstudante: user.numeroEstudante,
+        fullemail: user.fullemail,
+        contacto: user.contacto
+    }));
+};
+exports.getUsers = getUsers;
 const deleteUser = async (userId) => {
     console.log(`Deleting user with ID: ${userId}`);
     await prisma.user.delete({ where: { id: userId } });

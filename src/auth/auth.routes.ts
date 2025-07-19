@@ -7,6 +7,7 @@ const router = Router()
 router.post('/api/register', AuthController.register)
 router.post('/api/login', AuthController.login)
 router.post('/api/recover', AuthController.recoverPassword)
+router.get('/api/getUsers', AuthController.getUsers)
 router.delete('/api/delete/:id', verifyToken, AuthController.deleteUser)
 
 export default router

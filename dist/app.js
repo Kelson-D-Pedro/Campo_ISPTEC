@@ -21,6 +21,7 @@ app.use("/api/register", auth_controller_1.register);
 app.use("/api/login", auth_controller_1.login);
 app.use("/api/recover", auth_controller_1.recoverPassword);
 app.use("/api/delete/:id", auth_controller_1.deleteUser);
+app.use("/api/getUsers", auth_controller_1.getUsers);
 // ------- BD -------
 // ------- ESTUDANTE -------
 app.use("/api/estudante", request_controller_1.createEstudante);

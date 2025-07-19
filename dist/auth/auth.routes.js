@@ -40,5 +40,6 @@ const router = (0, express_1.Router)();
 router.post('/api/register', AuthController.register);
 router.post('/api/login', AuthController.login);
 router.post('/api/recover', AuthController.recoverPassword);
+router.get('/api/getUsers', AuthController.getUsers);
 router.delete('/api/delete/:id', auth_middleware_1.verifyToken, AuthController.deleteUser);
 exports.default = router;

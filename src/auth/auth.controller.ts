@@ -48,6 +48,17 @@ export const recoverPassword = async (req: Request, res: Response) => {
   }
 }
 
+export const getUsers = async (req: Request, res: Response) => {
+  try {
+    const users = await AuthService.getUsers()
+    console.log("Users retrieved successfully.")
+    res.status(200).json(users)
+  } catch (error) {
+    console.error("Error retrieving users:", error)
+    res.status(500).json({ error: "Erro ao obter usuários." })
+  }
+}
+
 export const deleteUser = async (req: Request, res: Response) => {
   try {
     const userID = req.params.id

@@ -33,7 +33,7 @@ var __importStar = (this && this.__importStar) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteUser = exports.recoverPassword = exports.login = exports.register = void 0;
+exports.deleteUser = exports.getUsers = exports.recoverPassword = exports.login = exports.register = void 0;
 const AuthService = __importStar(require("./auth.service"));
 const register = async (req, res) => {
     try {
@@ -75,6 +75,18 @@ const recoverPassword = async (req, res) => {
     }
 };
 exports.recoverPassword = recoverPassword;
+const getUsers = async (req, res) => {
+    try {
+        const users = await AuthService.getUsers();
+        console.log("Users retrieved successfully.");
+        res.status(200).json(users);
+    }
+    catch (error) {
+        console.error("Error retrieving users:", error);
+        res.status(500).json({ error: "Erro ao obter usuários." });
+    }
+};
+exports.getUsers = getUsers;
 const deleteUser = async (req, res) => {
     try {
         const userID = req.params.id;
