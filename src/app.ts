@@ -16,66 +16,66 @@ app.use(express.json());
 
 
 // ------- AUTH -------
-app.use("/register", register);
-app.use("/login", login);
-app.use("/recover", recoverPassword);
-app.delete("/delete/:id", deleteUser);
+app.use("/api/register", register);
+app.use("/api/login", login);
+app.use("/api/recover", recoverPassword);
+app.use("/api/delete/:id", deleteUser);
 
 // ------- BD -------
 
 // ------- ESTUDANTE -------
-app.use("/estudante",createEstudante);
-app.use("/estudante/:numeroEstudante",getEstudanteRequests);
-app.put("/estudante/:id",updateEstudante);
-app.delete("/estudante/:id",deleteEstudante);
+app.use("/api/estudante",createEstudante);
+app.use("/api/estudante/:numeroEstudante",getEstudanteRequests);
+app.put("/api/estudante/:id",updateEstudante);
+app.use("/api/estudante/:id",deleteEstudante);
 
 // ------- EXTERNO -------
-app.use("/externo",createExterno);
-app.use("/externo/:email",getExternoRequests);
-app.use("/externo/:id",updateExterno);
-app.delete("/externo/:id",deleteExterno);
+app.use("/api/externo",createExterno);
+app.use("/api/externo/:email",getExternoRequests);
+app.use("/api/externo/:id",updateExterno);
+app.use("/api/externo/:id",deleteExterno);
 
 // ------- ADMIN -------
-app.use("/admin/all",getAllRequests);
-app.use("/admin/all",deleteAllRequests);
-app.use("/admin/estudante/:id/status",updateStatusEstudante);
-app.use("/admin/externo/:id/status",updateStatusExterno);
+app.use("/api/admin/all",getAllRequests);
+app.use("/api/admin/all",deleteAllRequests);
+app.use("/api/admin/estudante/:id/status",updateStatusEstudante);
+app.use("/api/admin/externo/:id/status",updateStatusExterno);
 
 // ------- EVENTOS -------
-app.use("/jogos", createJogoController);
-app.use("/jogos", getJogosController);
-app.use("/jogos/:id", getJogoByIdController);
-app.put("/jogos/:id", updateJogoController);
-app.delete("/jogos/:id", deleteJogoController);  
+app.use("/api/jogos", createJogoController);
+app.use("/api/jogos", getJogosController);
+app.use("/api/jogos/:id", getJogoByIdController);
+app.use("/api/jogos/:id", updateJogoController);
+app.use("/api/jogos/:id", deleteJogoController);  
 
-app.use("/marcacoes", createMarcacaoController);
-app.use("/marcacoes", getMarcacoesController);
-app.use("/marcacoes/:id", getMarcacaoByIdController);
-app.put("/marcacoes/:id", updateMarcacaoController);
-app.delete("/marcacoes/:id", deleteMarcacaoController);  
+app.use("/api/marcacoes", createMarcacaoController);
+app.use("/api/marcacoes", getMarcacoesController);
+app.use("/api/marcacoes/:id", getMarcacaoByIdController);
+app.use("/api/marcacoes/:id", updateMarcacaoController);
+app.use("/api/marcacoes/:id", deleteMarcacaoController);  
 
-app.use("/participacoes", createParticipacaoController);
-app.use("/participacoes", getParticipacoesController);
-app.use("/participacoes/:id", getParticipacaoByIdController);
-app.put("/participacoes/:id", updateParticipacaoController);     
-app.delete("/participacoes/:id", deleteParticipacaoController);      
+app.use("/api/participacoes", createParticipacaoController);
+app.use("/api/participacoes", getParticipacoesController);
+app.use("/api/participacoes/:id", getParticipacaoByIdController);
+app.use("/api/participacoes/:id", updateParticipacaoController);     
+app.use("/api/participacoes/:id", deleteParticipacaoController);      
 
-app.use("/technicians", createTechnicianController);
-app.use("/technicians", getTechniciansController);
-app.use("/technicians/:id", getTechnicianByIdController);
-app.put("/technicians/:id", updateTechnicianController);
-app.delete("/technicians/:id", deleteTechnicianController);
+app.use("/api/technicians", createTechnicianController);
+app.use("/api/technicians", getTechniciansController);
+app.use("/api/technicians/:id", getTechnicianByIdController);
+app.use("/api/technicians/:id", updateTechnicianController);
+app.use("/api/technicians/:id", deleteTechnicianController);
 
-app.use("/equipes", createEquipeController);
-app.use("/equipes", getEquipesController);
-app.use("/equipes/:id", getEquipeByIdController);
-app.put("/equipes/:id", updateEquipeController);
-app.delete("/equipes/:id", deleteEquipeController);
+app.use("/api/equipes", createEquipeController);
+app.use("/api/equipes", getEquipesController);
+app.use("/api/equipes/:id", getEquipeByIdController);
+app.use("/api/equipes/:id", updateEquipeController);
+app.use("/api/equipes/:id", deleteEquipeController);
 
-app.use("/eventos", createEventoController);
-app.use("/eventos", getEventosController);
-app.use("/eventos/:id", getEventoByIdController);
-app.put("/eventos/:id", updateEventoController);
-app.delete("/eventos/:id", deleteEventoController);
+app.use("/api/eventos", createEventoController);
+app.use("/api/eventos", getEventosController);
+app.use("/api/eventos/:id", getEventoByIdController);
+app.use("/api/eventos/:id", updateEventoController);
+app.use("/api/eventos/:id", deleteEventoController);
 
 export default app;
