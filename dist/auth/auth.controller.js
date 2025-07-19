@@ -77,6 +77,7 @@ const recoverPassword = async (req, res) => {
 exports.recoverPassword = recoverPassword;
 const getUsers = async (req, res) => {
     try {
+        console.log("Fetching all registered users.");
         const users = await AuthService.getUsers();
         console.log("Users retrieved successfully.");
         res.status(200).json(users);

@@ -14,7 +14,9 @@ const events_controller_3 = require("./events/events.controller");
 const events_controller_4 = require("./events/events.controller");
 const events_controller_5 = require("./events/events.controller");
 const events_controller_6 = require("./events/events.controller");
+const cors_1 = __importDefault(require("cors"));
 const app = (0, express_1.default)();
+app.use((0, cors_1.default)());
 app.use(express_1.default.json());
 // ------- AUTH -------
 app.use("/api/register", auth_controller_1.register);

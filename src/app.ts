@@ -9,10 +9,11 @@ import { createParticipacaoController, getParticipacoesController, getParticipac
 import { createTechnicianController, getTechniciansController, getTechnicianByIdController, updateTechnicianController, deleteTechnicianController } from "./events/events.controller";
 import { createEquipeController, getEquipesController, getEquipeByIdController, updateEquipeController, deleteEquipeController } from "./events/events.controller";
 import { createEventoController, getEventosController, getEventoByIdController, updateEventoController, deleteEventoController } from "./events/events.controller";
+import cors from 'cors'
 import { get } from "http";
  
 const app = express();
-
+app.use(cors());
 app.use(express.json());
 
 
