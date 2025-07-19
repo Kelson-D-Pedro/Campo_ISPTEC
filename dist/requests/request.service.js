@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.updateExternoStatus = exports.updateEstudanteStatus = exports.deleteAllRequests = exports.listAllRequests = exports.deleteExternoRequest = exports.updateExternoRequest = exports.listExternoRequests = exports.createExternRequest = exports.deleteEstudanteRequest = exports.updateEstudanteRequest = exports.listEstudanteRequests = exports.createEstudanteRequest = void 0;
-const prisma_1 = require("../generated/prisma");
-const prisma = new prisma_1.PrismaClient();
+const client_1 = require("@prisma/client");
+const prisma = new client_1.PrismaClient();
 // -------------------- ESTUDANTES --------------------
 const createEstudanteRequest = async (data) => {
     return await prisma.estudante.create({ data });

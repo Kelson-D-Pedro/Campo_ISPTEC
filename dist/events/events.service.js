@@ -30,8 +30,8 @@ exports.getTechnicians = getTechnicians;
 exports.getTechnicianById = getTechnicianById;
 exports.updateTechnician = updateTechnician;
 exports.deleteTechnician = deleteTechnician;
-const prisma_1 = require("../generated/prisma");
-const prisma = new prisma_1.PrismaClient();
+const client_1 = require("@prisma/client");
+const prisma = new client_1.PrismaClient();
 // ------------------ TEAM ------------------------
 async function createEquipe(data) {
     return await prisma.equipe.create({ data });
