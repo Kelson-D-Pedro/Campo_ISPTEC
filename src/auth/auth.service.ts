@@ -65,6 +65,7 @@ export const recoverPassword = async (numeroEstudante: string) => {
 export const getUsers = async () => {
   console.log("Fetching all users from the database.")
   const users = await prisma.user.findMany()
+  console.log(users)
   return users.map(user => ({
     id: user.id,
     nomeCompleto: user.nomeCompleto,
