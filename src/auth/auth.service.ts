@@ -13,26 +13,24 @@ interface RegisterParams {
     numeroEstudante: string
     fullemail?: string
     senha: string
-    contacto: string
+    contacto?: string
 }
 
-export const register = async ({ nomeCompleto, numeroEstudante, senha, contacto }: RegisterParams) => {
+export const register = async ({ nomeCompleto, numeroEstudante, senha}: RegisterParams) => {
   if (!nomeCompleto)
     console.error('Nome completo é obrigatório.')
   if (!numeroEstudante)
     console.error('Número de estudante é obrigatório.')
   if (!senha)
     console.error('Senha é obrigatória.')
-  if (!contacto)
-    console.error('Contacto é obrigatório.')
-  if (!nomeCompleto || !numeroEstudante || !senha || !contacto) throw new Error('Campos obrigatórios ausentes.')
+  if (!nomeCompleto || !numeroEstudante || !senha) throw new Error('Campos obrigatórios ausentes.')
   if (!validatePassword(senha)) throw new Error('Senha muito fraca.')
   const existing = await prisma.user.findUnique({ where: { numeroEstudante } })
   if (existing) throw new Error('Estudade já cadastrado.')
 
   const hashed = await bcrypt.hash(senha, 10)
-  const user = await prisma.user.create({ data: { nomeCompleto, numeroEstudante, fullemail: `${numeroEstudante}@isptec.co.ao`, senha: hashed, contacto } })
-  return { id: user.id, nomeCompleto: user.nomeCompleto, numeroEstudante: user.numeroEstudante ,fullemail: `${user.numeroEstudante}@isptec.co.ao`, contacto: user.contacto }
+  const user = await prisma.user.create({ data: { nomeCompleto, numeroEstudante, fullemail: `${numeroEstudante}@isptec.co.ao`, senha: hashed, contacto: '' } })
+  return { id: user.id, nomeCompleto: user.nomeCompleto, numeroEstudante: user.numeroEstudante ,fullemail: `${user.numeroEstudante}@isptec.co.ao` }
 }
 
 export const login = async ({ numeroEstudante, senha }: { numeroEstudante: string; senha: string }) => {
