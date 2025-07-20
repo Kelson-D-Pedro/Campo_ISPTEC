@@ -12,6 +12,14 @@ const auth_helpers_2 = require("./auth.helpers");
 const prisma = new client_1.PrismaClient();
 const SECRET = process.env.JWT_SECRET;
 const register = async ({ nomeCompleto, numeroEstudante, senha, contacto }) => {
+    if (!nomeCompleto)
+        console.error('Nome completo é obrigatório.');
+    if (!numeroEstudante)
+        console.error('Número de estudante é obrigatório.');
+    if (!senha)
+        console.error('Senha é obrigatória.');
+    if (!contacto)
+        console.error('Contacto é obrigatório.');
     if (!nomeCompleto || !numeroEstudante || !senha || !contacto)
         throw new Error('Campos obrigatórios ausentes.');
     if (!(0, auth_helpers_1.validatePassword)(senha))

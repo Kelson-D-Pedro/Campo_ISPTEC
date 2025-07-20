@@ -17,6 +17,14 @@ interface RegisterParams {
 }
 
 export const register = async ({ nomeCompleto, numeroEstudante, senha, contacto }: RegisterParams) => {
+  if (!nomeCompleto)
+    console.error('Nome completo é obrigatório.')
+  if (!numeroEstudante)
+    console.error('Número de estudante é obrigatório.')
+  if (!senha)
+    console.error('Senha é obrigatória.')
+  if (!contacto)
+    console.error('Contacto é obrigatório.')
   if (!nomeCompleto || !numeroEstudante || !senha || !contacto) throw new Error('Campos obrigatórios ausentes.')
   if (!validatePassword(senha)) throw new Error('Senha muito fraca.')
   const existing = await prisma.user.findUnique({ where: { numeroEstudante } })

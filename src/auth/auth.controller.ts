@@ -1,6 +1,8 @@
 import { Request, Response } from 'express'
 import * as AuthService from './auth.service'
+import {PrismaClient } from '@prisma/client'
 
+const prisma = new PrismaClient()
 declare global {
   namespace Express {
     interface Request {
@@ -51,8 +53,9 @@ export const recoverPassword = async (req: Request, res: Response) => {
 export const getUsers = async (req: Request, res: Response) => {
   try {
     console.log("Fetching all registered users.")
-    const users = await AuthService.getUsers()
+    const users = await prisma.user.findMany()
     console.log("Users retrieved successfully.")
+    console.log(users)
     res.status(200).json(users)
   } catch (error) {
     console.error("Error retrieving users:", error)

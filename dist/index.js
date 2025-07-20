@@ -8,5 +8,5 @@ const http_1 = require("http");
 const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
 const server = (0, http_1.createServer)(app_1.default);
 server.listen(PORT, "0.0.0.0", () => {
-    console.log(`Servidor rodando na porta http://192.168.1.123:${PORT}`);
+    console.log(`Servidor rodando na porta http://192.168.0.122:${PORT}`);
 });

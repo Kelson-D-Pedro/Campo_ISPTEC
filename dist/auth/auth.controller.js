@@ -35,6 +35,8 @@ var __importStar = (this && this.__importStar) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteUser = exports.getUsers = exports.recoverPassword = exports.login = exports.register = void 0;
 const AuthService = __importStar(require("./auth.service"));
+const client_1 = require("@prisma/client");
+const prisma = new client_1.PrismaClient();
 const register = async (req, res) => {
     try {
         const user = await AuthService.register(req.body);
@@ -78,8 +80,9 @@ exports.recoverPassword = recoverPassword;
 const getUsers = async (req, res) => {
     try {
         console.log("Fetching all registered users.");
-        const users = await AuthService.getUsers();
+        const users = await prisma.user.findMany();
         console.log("Users retrieved successfully.");
+        console.log(users);
         res.status(200).json(users);
     }
     catch (error) {
