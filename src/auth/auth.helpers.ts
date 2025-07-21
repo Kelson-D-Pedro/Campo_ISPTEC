@@ -7,6 +7,12 @@ export const transporter = nodemailer.createTransport({
     pass: process.env.EMAIL_PASS       // senha do app ou smtp
   }
 })
+
 export const validatePassword = (senha: string): boolean => {
   return senha.length >= 6 && /[A-Z]/.test(senha) && /\d/.test(senha)
+}
+
+export const generateOtp = (): string => {
+  const otp = Math.floor(100000 + Math.random() * 900000).toString()
+  return otp
 }

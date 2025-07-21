@@ -2,7 +2,7 @@ import express from "express";
 import { createEstudante, getEstudanteRequests, updateEstudante, deleteEstudante } from "./requests/request.controller";
 import { createExterno, getExternoRequests, updateExterno, deleteExterno } from "./requests/request.controller";
 import { getAllRequests, deleteAllRequests, updateStatusEstudante, updateStatusExterno } from "./requests/request.controller";
-import { register, login, recoverPassword, deleteUser, getUsers } from "./auth/auth.controller";
+import { register, login, recoverPassword, deleteUser, getUsers, updateUser} from "./auth/auth.controller";
 import { createJogoController, getJogosController, getJogoByIdController, updateJogoController, deleteJogoController } from "./events/events.controller";
 import { createMarcacaoController, getMarcacoesController, getMarcacaoByIdController, updateMarcacaoController, deleteMarcacaoController } from "./events/events.controller";
 import { createParticipacaoController, getParticipacoesController, getParticipacaoByIdController, updateParticipacaoController, deleteParticipacaoController } from "./events/events.controller";
@@ -21,8 +21,10 @@ app.use(express.json());
 app.use("/api/register", register);
 app.use("/api/login", login);
 app.use("/api/recover", recoverPassword);
+app.use("/api/admin/getUsers", getUsers);
+app.use("/api/admin/getUser/:id", getUsers);
+app.put("/api/admin/update/:id", updateUser);
 app.use("/api/delete/:id", deleteUser);
-app.use("/api/getUsers", getUsers);
 
 // ------- BD -------
 
