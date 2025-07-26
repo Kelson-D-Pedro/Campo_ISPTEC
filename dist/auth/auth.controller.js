@@ -33,7 +33,7 @@ var __importStar = (this && this.__importStar) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteUser = exports.getUsers = exports.recoverPassword = exports.login = exports.register = void 0;
+exports.deleteUser = exports.updateUser = exports.getUser = exports.getUsers = exports.recoverPassword = exports.login = exports.register = void 0;
 const AuthService = __importStar(require("./auth.service"));
 const client_1 = require("@prisma/client");
 const prisma = new client_1.PrismaClient();
@@ -51,6 +51,7 @@ const register = async (req, res) => {
 exports.register = register;
 const login = async (req, res) => {
     try {
+        console.log(req.body);
         const token = await AuthService.login(req.body);
         console.log("User logged in successfully, token generated.");
         res.status(200).json({ token });
@@ -64,11 +65,11 @@ exports.login = login;
 const recoverPassword = async (req, res) => {
     const { numeroEstudante } = req.body;
     if (!numeroEstudante) {
+        console.error("Número de estudante é obrigatório para recuperação de senha.");
         return res.status(400).json({ error: 'Número de estudante é obrigatório.' });
     }
     try {
-        await AuthService.recoverPassword(numeroEstudante);
-        console.log("Password recovery instructions sent to:", numeroEstudante);
+        const otp = await AuthService.recoverPassword(numeroEstudante);
         res.status(200).json({ message: 'Instruções enviadas para o e-mail institucional.' });
     }
     catch (error) {
@@ -80,17 +81,65 @@ exports.recoverPassword = recoverPassword;
 const getUsers = async (req, res) => {
     try {
         console.log("Fetching all registered users.");
-        const users = await prisma.user.findMany();
+        const users = await AuthService.getUsers();
         console.log("Users retrieved successfully.");
         console.log(users);
         res.status(200).json(users);
     }
     catch (error) {
-        console.error("Error retrieving users:", error);
+        console.error("Error retrieving users:");
         res.status(500).json({ error: "Erro ao obter usuários." });
     }
 };
 exports.getUsers = getUsers;
+const getUser = async (req, res) => {
+    try {
+        const userID = req.params.id;
+        if (!userID) {
+            console.error("User ID not provided for retrieval.");
+            return res.status(400).json({ error: "ID de usuário não fornecido." });
+        }
+        const userId = Number(userID);
+        if (isNaN(userId)) {
+            console.error("Invalid user ID provided:", userID);
+            return res.status(400).json({ error: "ID de usuário inválido." });
+        }
+        const user = await AuthService.getUser(userId);
+        if (!user) {
+            console.error("User not found with ID:", userId);
+            return res.status(404).json({ error: "Usuário não encontrado." });
+        }
+        console.log("User retrieved successfully:", user);
+        res.status(200).json(user);
+    }
+    catch (error) {
+        console.error("Error retrieving user:", error);
+        res.status(500).json({ error: "Erro ao obter usuário." });
+    }
+};
+exports.getUser = getUser;
+const updateUser = async (req, res) => {
+    try {
+        const userID = req.params.id;
+        if (!userID) {
+            console.error("User ID not provided for update.");
+            return res.status(400).json({ error: "ID de usuário não fornecido." });
+        }
+        const userId = Number(userID);
+        if (isNaN(userId)) {
+            console.error("Invalid user ID provided:", userID);
+            return res.status(400).json({ error: "ID de usuário inválido." });
+        }
+        const updatedUser = await AuthService.updateUser(userId, req.body);
+        console.log("User updated successfully:", updatedUser);
+        res.status(200).json(updatedUser);
+    }
+    catch (error) {
+        console.error("Error updating user:", error);
+        res.status(400).json({ error: "Erro ao atualizar usuário." });
+    }
+};
+exports.updateUser = updateUser;
 const deleteUser = async (req, res) => {
     try {
         const userID = req.params.id;
@@ -108,8 +157,8 @@ const deleteUser = async (req, res) => {
         res.status(204).end();
     }
     catch (err) {
-        console.error("Error deleting user:", err);
-        res.status(400).json({ error: "Erro ao apagar usuário." });
+        console.error("Error deleting user:");
+        res.status(400).json({ error: "Erro ao apagar usuário.", message: "Erro ao apagar usuário." });
     }
 };
 exports.deleteUser = deleteUser;

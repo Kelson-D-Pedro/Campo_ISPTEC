@@ -22,8 +22,10 @@ app.use(express_1.default.json());
 app.use("/api/register", auth_controller_1.register);
 app.use("/api/login", auth_controller_1.login);
 app.use("/api/recover", auth_controller_1.recoverPassword);
+app.use("/api/admin/getUsers", auth_controller_1.getUsers);
+app.use("/api/admin/getUser/:id", auth_controller_1.getUsers);
+app.put("/api/admin/update/:id", auth_controller_1.updateUser);
 app.use("/api/delete/:id", auth_controller_1.deleteUser);
-app.use("/api/getUsers", auth_controller_1.getUsers);
 // ------- BD -------
 // ------- ESTUDANTE -------
 app.use("/api/estudante", request_controller_1.createEstudante);

@@ -14,6 +14,6 @@
       "@appointments/*": ["appointments/*"]
     }
   },
-  "include": ["src/**/*", "src/generated/prisma"],
+  "include": ["src/**/*", "swagger-output.json"],
   "exclude": ["node_modules", "dist"]
 }
